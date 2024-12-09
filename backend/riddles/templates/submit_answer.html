@@ -1,0 +1,23 @@
+<!-- submit_answer.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Your Answer</title>
+</head>
+<body>
+
+    <h1>Submit Your Answer for the Riddle</h1>
+    
+    <h2>{{ riddle.question }}</h2>  <!-- Display the riddle's question -->
+    
+    <form method="POST" action = "{% url 'riddles:submit_answer' riddle.id %}">
+        {% csrf_token %}
+        <label for="answer">Your Answer:</label>
+        <input type="text" id="answer" name="answer" required>
+        <button type="submit">Submit Answer</button>
+    </form>
+
+</body>
+</html>

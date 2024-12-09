@@ -1,0 +1,32 @@
+<body>
+    <h1>Riddles List</h1>
+    
+    {% if user.is_authenticated %}
+        <p>Welcome, {{ user.username }}!
+        <form method="POST" action="{% url 'riddles:logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+        </p>
+    {% else %}
+        <p><a href="{% url 'riddles:login' %}">Login</a></p>
+    {% endif %}
+
+    <!-- List of riddles and answers below -->
+    <ul>
+        {% for riddle in riddles %}
+            <li>
+                <h3>{{ riddle.question }}</h3>  <!-- Displaying the question -->
+                <form method="POST" action="{% url 'riddles:submit_answer' riddle.id %}">
+                    {% csrf_token %}
+                    <label for="answer">Your Answer:</label>
+                    <input type="text" name="answer" id="answer" required>
+                    <button type="submit">Submit Answer</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <p><a href="{% url 'riddles:leaderboard' %}">View Leaderboard</a></p>
+</body>
+</html>
