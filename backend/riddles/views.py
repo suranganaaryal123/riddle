@@ -14,10 +14,6 @@ def riddles_list(request):
     return render(request, 'riddles_list.html', {'riddles': riddles})
 
 # View to handle submitting an answer
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Riddle, UserAnswer
-from django.contrib import messages
-
 def submit_answer(request, riddle_id):
     riddle = get_object_or_404(Riddle, id=riddle_id)
 
@@ -90,3 +86,17 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'register.html', {'form': form})
+
+@login_required
+def profile(request):
+    # Get the user's answered riddles and score
+    user_answers = UserAnswer.objects.filter(user_name=request.user.username)
+    total_score = user_answers.filter(correct=True).count()
+    riddles_attempted = user_answers.values_list('riddle', flat=True).distinct().count()
+
+    return render(request, 'profile.html', {
+        'user': request.user,
+        'total_score': total_score,
+        'riddles_attempted': riddles_attempted,
+        'user_answers': user_answers,
+    })

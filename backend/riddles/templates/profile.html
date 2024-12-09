@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+<body>
+    <h1>Welcome, {{ user.username }}!</h1>
+    
+    <p><strong>Total Score:</strong> {{ total_score }}</p>
+    <p><strong>Riddles Attempted:</strong> {{ riddles_attempted }}</p>
+
+    <h2>Your Answers:</h2>
+    <ul>
+        {% for answer in user_answers %}
+            <li>
+                Riddle: {{ answer.riddle.question }}<br>
+                Your Answer: {{ answer.answer }}<br>
+                Correct: {{ answer.correct|yesno:"Yes,No" }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <p><a href="{% url 'riddles:riddles_list' %}">Back to Riddles</a></p>
+    <p><a href="{% url 'riddles:logout' %}">Logout</a></p>
+</body>
+</html>

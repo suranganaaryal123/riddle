@@ -3,6 +3,7 @@
     
     {% if user.is_authenticated %}
         <p>Welcome, {{ user.username }}!
+        <a href="{% url 'riddles:profile' %}">Profile</a> |
         <form method="POST" action="{% url 'riddles:logout' %}">
             {% csrf_token %}
             <button type="submit">Logout</button>
@@ -22,7 +23,6 @@
                     <label for="answer">Your Answer:</label>
                     <input type="text" name="answer" id="answer" required>
                     <button type="submit">Submit Answer</button>
-                </form>
             </li>
         {% endfor %}
     </ul>
